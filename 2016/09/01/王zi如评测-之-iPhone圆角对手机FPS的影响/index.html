@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="首先标题是随性创造，如有雷同纯属巧合！为什么要写这篇文章？最近在搞xamarin开发，做个控件圆角难做得蛋疼。很是怀念OC的实现。然后一个兴起做了这个评测。本评测主要是探讨在多种方式下实现iOS圆角的实现，对FPS（frames per second ==帧每秒）的影响。
+
+先来来个对比：请问案例一">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhenxuan ou">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="王zi如评测 之 iPhone圆角对手机FPS的影响"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="mango’s blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>王zi如评测 之 iPhone圆角对手机FPS的影响 - mango’s blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Configurable Title</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/ouzhenxuan">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>王zi如评测 之 iPhone圆角对手机FPS的影响</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        2016-09-01
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <blockquote>
+<p>首先标题是随性创造，如有雷同纯属巧合！为什么要写这篇文章？最近在搞xamarin开发，做个控件圆角难做得蛋疼。很是怀念OC的实现。然后一个兴起做了这个评测。<br>本评测主要是探讨在多种方式下实现iOS圆角的实现，对FPS（frames per second ==帧每秒）的影响。</p>
+</blockquote>
+<p>先来来个对比：请问案例一卡顿还是案例二卡顿？</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/271180-295e1230ba332916.gif?imageMogr2/auto-orient/strip" alt="案例一"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/271180-fa5d7313ed0bbebb.gif?imageMogr2/auto-orient/strip" alt="案例二"><br>答案就是：答案自找</p>
+<p>ok，先来说说画圆角的方式：</p>
+<p>##1. 使用layer，这应该是我们最常用的方法了，两代码解决战斗。<br><figure class="highlight plain"><figcaption><span>= 22;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">view.layer.masksToBounds = YES;</div></pre></td></tr></table></figure></p>
+<p>上图：<br><img src="http://upload-images.jianshu.io/upload_images/271180-fa5d7313ed0bbebb.gif?imageMogr2/auto-orient/strip" alt="layer方式画圆"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/271180-fe0fddf5da896c9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FPS"></p>
+<p>可以从图中知道，在滑动tableview时，fps只有18、19（正常60）。这种状态有个俗语：“卡出翔”。<br>简略代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@&quot;threeCell&quot;];</div><div class="line">    if (cell == nil) &#123;</div><div class="line">        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@&quot;threeCell&quot;];</div><div class="line">        ...</div><div class="line">        ...</div><div class="line">        UIImageView * view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;hehe&quot;]];</div><div class="line">        view.frame = CGRectMake(0, 0, 44, 44);</div><div class="line">        view.layer.cornerRadius = 22;</div><div class="line">        view.layer.masksToBounds = YES;</div><div class="line">//        view.layer.shouldRasterize = YES;</div><div class="line">//        view.layer.rasterizationScale = [UIScreen mainScreen].scale;</div><div class="line">         [cell addSubview:view];</div><div class="line">        ...</div></pre></td></tr></table></figure></p>
+<p>我们得想办法优化ho，然后Google了下就有了上面注释的两行代码。<br>想必大家也留意到这两行代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//        view.layer.shouldRasterize = YES;</div><div class="line">//        view.layer.rasterizationScale = [UIScreen mainScreen].scale;</div></pre></td></tr></table></figure></p>
+<p>加上以后，大家可以看看效果。<br><img src="http://upload-images.jianshu.io/upload_images/271180-66cb1e414b7bcb88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="11-12的fps"><br>更加卡了，怎么办呢？为啥呢？</p>
+<p>其实这两句话不应该放在这个地方，应该在cell.layer上面添加。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cell.layer.shouldRasterize = YES;</div><div class="line">cell.layer.rasterizationScale = [UIScreen mainScreen].scale;</div></pre></td></tr></table></figure></p>
+<p>修改了地方以后，我们再看看效果。<br><img src="http://upload-images.jianshu.io/upload_images/271180-fb70a1d1fd8bd877.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="cell.layer.shouldRasterize"></p>
+<p>添加这两句代码后，能将你的帧数提高到50以上，<figure class="highlight plain"><figcaption><span>= YES```会使视图渲染内容被缓存起来，下次绘制的时候可以直接显示缓存。但这的前提是得保证内容不变的情况下。如果你的图片是变化的，这可能也会对性能造成影响。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##2.drawrect</div></pre></td></tr></table></figure></p>
+<p>UIImage * myImage = [UIImage imageNamed:@”hehe”];<br>    CGContextRef ctx = UIGraphicsGetCurrentContext();</p>
+<pre><code>CGContextSaveGState(ctx);//保存上下文
+CGContextAddEllipseInRect(ctx,CGRectMake(105, 5, 40, 40));//因为只要确定了矩形框，圆或者是椭圆就确定了。
+CGContextClip(ctx);
+
+CGContextTranslateCTM(ctx, 0, 50);
+CGContextScaleCTM(ctx, 1, -1);
+CGContextDrawImage(ctx, CGRectMake(100, 0, 50, 50), [myImage CGImage]);
+CGContextRestoreGState(ctx);//恢复状态后，就不会受裁剪的影响，不然只能在剪裁
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![drawrect.gif](http://upload-images.jianshu.io/upload_images/271180-5b3ab5f2a80b168b.gif?imageMogr2/auto-orient/strip)</div><div class="line"></div><div class="line"></div><div class="line">![drawrect.png](http://upload-images.jianshu.io/upload_images/271180-11d55ece3f57f7eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line">从图中可以分析得出，使用drawrect方式来实现圆角，FPS会比较高，基本不会卡顿。而CPU的使用情况也是可以接受的。</div><div class="line"></div><div class="line">##3.UIBezierPath，贝塞尔曲线</div></pre></td></tr></table></figure>
+<p>UIImageView * view = [[UIImageView alloc] init];<br>        view.frame = CGRectMake(200, 0, 44, 44);<br>        [cell addSubview:view];</p>
+<pre><code>UIImage * image = [UIImage imageNamed:@&quot;hehe&quot;];
+UIGraphicsBeginImageContextWithOptions(CGSizeMake(44, 44), NO, 1.0);
+[[UIBezierPath bezierPathWithRoundedRect:view.bounds cornerRadius:22] addClip];
+[image drawInRect:view.bounds];
+view.image = UIGraphicsGetImageFromCurrentImageContext();
+UIGraphicsEndImageContext();
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">![bezi.gif](http://upload-images.jianshu.io/upload_images/271180-a5d15b73e4b57ab3.gif?imageMogr2/auto-orient/strip)</div><div class="line">![bezi.png](http://upload-images.jianshu.io/upload_images/271180-38282b91f39a912f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line">使用贝塞尔曲线来做这个功能，CPU使用情况比drawrect的方式要高一些，但也没有很高的状态。</div></pre></td></tr></table></figure>
+<p> dispatch_queue_t Cricle = dispatch_queue_create(“ImageCreate1”, NULL);<br>        dispatch_async(Cricle, ^{<br>            UIImage <em> image = [UIImage imageNamed:@”hehe”];<br>            UIGraphicsBeginImageContextWithOptions(CGSizeMake(44, 44), NO, 1.0);<br>            [[UIBezierPath bezierPathWithRoundedRect:view.bounds cornerRadius:22] addClip];<br>            [image drawInRect:view.bounds];<br>            UIImage </em> doneImage = UIGraphicsGetImageFromCurrentImageContext();<br>            dispatch_async(dispatch_get_main_queue(), ^{<br>                view.image = doneImage;<br>            });<br>            UIGraphicsEndImageContext();<br>        });</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">使用一个子线程去渲染图片，然后在主线程更新UI，这方法在如果只渲染一张图片速度还是挺快的，cpu和fps都没啥问题。但一个cell中有4个这样的图片，手机就不行了。</div><div class="line">![fps&amp;CPU](http://upload-images.jianshu.io/upload_images/271180-77b8e18503bfe53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line">CPU处于满载状态，一开始fps还有50+，慢慢就变成只有20-30了。所以不推荐这个，还是简单粗暴比较好。（若是我打开姿势不对，请立马留意）</div><div class="line"></div><div class="line">##4.Mask，很有趣的方法</div></pre></td></tr></table></figure>
+<p>cell.layer.shouldRasterize = YES;<br>cell.layer.rasterizationScale = [UIScreen mainScreen].scale;<br>…<br>…<br>UIImageView * view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@”hehe”]];<br>        view.frame = CGRectMake(0, 0, 44, 44);<br>        [cell addSubview:view];</p>
+<pre><code>CALayer *maskLayer        = [CALayer layer];
+maskLayer.frame           = view.bounds;
+maskLayer.contents        = (id)[UIImage imageNamed:@&quot;xingxing&quot;].CGImage;
+view.layer.mask = maskLayer;
+</code></pre><p>```<br>先看图<br><img src="http://upload-images.jianshu.io/upload_images/271180-aa21dfaac1f5e457.gif?imageMogr2/auto-orient/strip" alt="mask.gif"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/271180-faf1ac28810db2c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="mask.layer.png"><br>这实现效果和layer.cornerRadius相类似，但Mask的性能比layer.cornerRadius要低。不过优点是你可以将你的图片变成任何形状的图形。</p>
+<blockquote>
+<p>总结：<br>1.如果你的内容不多变，并且当前页面不卡顿。可以使用layer.cornerRadius+ layer.shouldRasterize来实现。<br>2.如果你当前页面需要优化性能，并且内容是变化的，推荐使用贝塞尔曲线来实现。<br>3.drawrect方法会造成离屏渲染，当点击cell或者页面有内容更新的时候就会重新调用，会造成不必要的性能损耗。</p>
+</blockquote>
+<p>ps：有些人会在图片上面覆盖一个镂空圆形图片的方法可以实现圆形头像效果，这个虽然是个极为高效的方法。但我的想法是——</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/271180-1b6b6ab1086f9d6c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="你在逗我！"></p>
+<p>这里是github连接：<br><a href="https://github.com/ouzhenxuan/DrawCircle" target="_blank" rel="external">https://github.com/ouzhenxuan/DrawCircle</a><br>喜欢请点个赞。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/ouzhenxuan" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
